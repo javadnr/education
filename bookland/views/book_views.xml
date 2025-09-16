@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="book_form_view" model="ir.ui.view">
+        <field name="name">Book Form</field>
+        <field name="model">bookland.book</field>
+        <field name="arch" type="xml">
+            <form string="Book">
+                <group>
+                    <group name="general">
+                        <field name="name"></field>
+                    </group>
+                    <group name="publication">
+                        <field name="publish_date"></field>
+                    </group>
+                </group>
+                <notebook>
+                    <page name="description" string="Description">
+                        <field name="description"></field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="book_list_view" model="ir.ui.view">
+        <field name="name">Book List</field>
+        <field name="model">bookland.book</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"></field>
+                <field name="publish_date"></field>
+            </tree>
+        </field>
+    </record>
+
+
+
+
+
+    <record id="books_list_action" model="ir.actions.act_window">
+        <field name="name">Book List</field>
+        <field name="res_model">bookland.book</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <record id="main_menu" model="ir.ui.menu">
+        <field name="name">Bookland</field>
+        <field name="sequence" eval="16" />
+    </record>
+
+    <record id="books_list_menu" model="ir.ui.menu">
+        <field name="name">Books</field>
+        <field name="parent_id" ref="bookland.main_menu" />
+        <field name="action" ref="bookland.books_list_action" />
+        <field name="sequence" eval="16" />
+    </record>
+
+</odoo>
