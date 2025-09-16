@@ -1,4 +1,3 @@
-from operator import index
 from odoo import fields, models
 
 
@@ -20,7 +19,7 @@ class BooklandBook(models.Model):
         # string="Description"
         required=False,
         translate=True,
-        index=False
+        index=False,
     )
     publish_date = fields.Date(string="Publish")
 
@@ -42,4 +41,5 @@ class BooklandBook(models.Model):
         help="""
 <h1>Price of the Book</h1>
 <p>How much the book should sell on store</p>
-""")
+""",
+    )
