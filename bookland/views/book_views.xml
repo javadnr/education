@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record id="book_form_view" model="ir.ui.view">
@@ -8,15 +8,15 @@
             <form string="Book">
                 <group>
                     <group name="general">
-                        <field name="name"></field>
+                        <field name="name" />
                     </group>
                     <group name="publication">
-                        <field name="publish_date"></field>
+                        <field name="publish_date" />
                     </group>
                 </group>
                 <notebook>
                     <page name="description" string="Description">
-                        <field name="description"></field>
+                        <field name="description" />
                     </page>
                 </notebook>
             </form>
@@ -29,8 +29,8 @@
         <field name="model">bookland.book</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"></field>
-                <field name="publish_date"></field>
+                <field name="name" />
+                <field name="publish_date" />
             </tree>
         </field>
     </record>

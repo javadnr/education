@@ -17,11 +17,14 @@ Book land accounting feature
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/github-odoonix%2Feducation-lightgray.png?logo=github
+.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+    :alt: License: LGPL-3
+.. |badge3| image:: https://img.shields.io/badge/github-odoonix%2Feducation-lightgray.png?logo=github
     :target: https://github.com/odoonix/education/tree/17.0/bookland_account
     :alt: odoonix/education
 
-|badge1| |badge2|
+|badge1| |badge2| |badge3|
 
 این ماژول امکانات حسابداری را اضافه می‌کند
 
@@ -36,7 +39,7 @@ Known issues / Roadmap
 V2.0.0
 ======
 
--  connect to invoice
+- connect to invoice
 
 Changelog
 =========
@@ -59,7 +62,7 @@ Credits
 Authors
 -------
 
-* 
+* Odoonix
 
 Maintainers
 -----------

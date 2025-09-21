@@ -17,11 +17,14 @@ Book land a modern library management system
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/github-odoonix%2Feducation-lightgray.png?logo=github
+.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+    :alt: License: LGPL-3
+.. |badge3| image:: https://img.shields.io/badge/github-odoonix%2Feducation-lightgray.png?logo=github
     :target: https://github.com/odoonix/education/tree/17.0/bookland
     :alt: odoonix/education
 
-|badge1| |badge2|
+|badge1| |badge2| |badge3|
 
 این یک اپلیکشن برای مدیریت کتابخانه‌های دانشگاه است.
 
@@ -41,7 +44,7 @@ Changelog
 در این نسخه ساختار اولیه نرم افزار ایجاد شده و امکانات زیر ایجاد شده
 است.
 
--  TODO:
+- TODO:
 
 Bug Tracker
 ===========
@@ -59,7 +62,7 @@ Credits
 Authors
 -------
 
-* 
+* Odoonix
 
 Maintainers
 -----------
