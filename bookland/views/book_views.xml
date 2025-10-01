@@ -6,12 +6,18 @@
         <field name="model">bookland.book</field>
         <field name="arch" type="xml">
             <form string="Book">
+                <button type="object" name="action_create_random_book">Create Random Book</button>
+                <button type="object" name="action_test_erro">Error</button>
                 <group>
                     <group name="general">
                         <field name="name" />
+                        <field name="display_name"></field>
+                        <field name="tag_ids"></field>
                     </group>
                     <group name="publication">
                         <field name="publish_date" />
+                        <field name="price"></field>
+                        <field name="age_in_days"></field>
                     </group>
                 </group>
                 <notebook>
@@ -36,16 +42,30 @@
     </record>
 
 
+    <record id="book_search_view" model="ir.ui.view">
+        <field name="name">book.search</field>
+        <field name="model">bookland.book</field>
+        <field name="arch" type="xml">
+            <search string="Search Books">
+                <field name="name" string="Book Name"/>
+                <field name="description" string="Description"/>
 
+                <filter name="price" string="Expensive" domain="[('price','>=', 100)]"/>
+                <filter string="Publish Date" name="filter_publish_date" date="publish_date"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_price" string="Price" context="{'group_by': 'price'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
 
 
     <record id="books_list_action" model="ir.actions.act_window">
         <field name="name">Book List</field>
         <field name="res_model">bookland.book</field>
         <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="bookland.book_search_view"/>
     </record>
-
-
 
 
     <record id="main_menu" model="ir.ui.menu">

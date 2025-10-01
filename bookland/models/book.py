@@ -1,4 +1,10 @@
-from odoo import fields, models
+import random
+
+from attr import field
+
+from odoo.exceptions import UserError, ValidationError
+from odoo import fields, models, api, Command
+from datetime import date
 
 
 class BooklandBook(models.Model):
@@ -14,6 +20,11 @@ class BooklandBook(models.Model):
         required=True,
         index=True,
         size=512,
+    )
+
+    display_name = fields.Char(
+        string="Book Display Title",
+        translate=True,
     )
     description = fields.Html(
         # string="Description"
@@ -32,14 +43,44 @@ class BooklandBook(models.Model):
 
     price = fields.Float(
         string="Book Price",
-        required=False,
-        digits=2,
-        index=False,
-        default=10.50,
-        readonly=True,
-        groups="base.user_group",
-        help="""
-<h1>Price of the Book</h1>
-<p>How much the book should sell on store</p>
-""",
     )
+
+    age_in_days = fields.Integer(
+        string="Days Since Publish",
+        compute="_compute_age_in_days",  # the function computed
+        store=True,
+    )
+
+    tag_ids = fields.Many2many("bookland.book.tag")
+
+    @api.onchange("publish_date")
+    def _compute_age_in_days(self):
+        for record in self:
+            if record.publish_date:
+                delta = date.today() - record.publish_date
+                record.age_in_days = delta.days
+            else:
+                record.age_in_days = 0
+
+    @api.model
+    def action_create_random_book(self, *args, **kwargs):
+        self.env["bookland.book"].create({
+            "name": "Name" + str(random.randint(0, 1500)),
+            "description": "",
+            "tag_ids": [Command.create({
+                "name": "tag1"
+            })]
+        })
+
+    @api.model
+    def action_test_erro(self, *args, **kwargs):
+        # self.ensore_once()
+        raise UserError("There is something bad")
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        for record in self:
+            record.update({
+                "display_name": f"Book {record.name}"
+            })
+        # self.unlink()
