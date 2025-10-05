@@ -1,11 +1,13 @@
 import random
 
 from attr import field
+import logging
 
 from odoo.exceptions import UserError, ValidationError
 from odoo import fields, models, api, Command
 from datetime import date
 
+_logger = logging.getLogger(__name__)
 
 class BooklandBook(models.Model):
     # Model Attributes
@@ -84,3 +86,21 @@ class BooklandBook(models.Model):
                 "display_name": f"Book {record.name}"
             })
         # self.unlink()
+
+    def create(self,vals_list):
+        res = super().create(vals_list)
+        # Search
+        all_record = self.env['bookland.book'].search([],order='publish_date asc')
+        record12 = self.env['bookland.book'].browse(1)
+        for record in all_record:
+            _logger.info(record.name)
+        # Logs vals_list
+        for val in vals_list:
+            _logger.info(val)
+        return res
+    
+    def write(self,vals_list):
+        res = super().write(vals_list)
+        for val in vals_list:
+            _logger.info(val)
+        return res
