@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 class BooklandBook(models.Model):
     # Model Attributes
     _name = "bookland.book"
+    _inherit = ['image.mixin']
     _description = "Book"
 
     # Fields
@@ -87,13 +88,28 @@ class BooklandBook(models.Model):
             })
         # self.unlink()
 
+
+    # def _get_bookss_name(self, parents):
+    #     names = parents.mapped('name')
+    #     return names
+    
+
     def create(self,vals_list):
         res = super().create(vals_list)
+
+        grouped_result = self.read_group(
+            [], #domain
+            ['name', 'price:sum'], #fields
+            ['name'] #group_by
+            )
+
+
         # Search
-        all_record = self.env['bookland.book'].search([],order='publish_date asc')
-        record12 = self.env['bookland.book'].browse(1)
-        for record in all_record:
-            _logger.info(record.name)
+        # all_record = self.env['bookland.book'].search([],order='publish_date asc')
+        # names=self._get_bookss_name(all_record)
+        # record12 = self.env['bookland.book'].browse(1)
+        # for record in all_record:
+        #     _logger.info(record.name)
         # Logs vals_list
         for val in vals_list:
             _logger.info(val)

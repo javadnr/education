@@ -6,6 +6,9 @@
         <field name="model">bookland.book</field>
         <field name="arch" type="xml">
             <form string="Book">
+            <sheet name="book_form">
+                <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+
                 <button type="object" name="action_create_random_book">Create Random Book</button>
                 <button type="object" name="action_test_erro">Error</button>
                 <group>
@@ -25,6 +28,7 @@
                         <field name="description" />
                     </page>
                 </notebook>
+                </sheet>
             </form>
         </field>
     </record>

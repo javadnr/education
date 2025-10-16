@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="books_details_template" name="Books Details">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <t t-foreach="books" t-as="book">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" t-attf-src="data:image/png;base64,{{book.image_1920}}" alt="Card image cap"/>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <span t-out="book.name"/>
+                                </h5>
+                                <p class="card-text">
+                                    <span t-out="book.description"/>
+                                </p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
