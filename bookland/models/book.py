@@ -25,6 +25,8 @@ class BooklandBook(models.Model):
         size=512,
     )
 
+    active = fields.Boolean(default="True")
+
     display_name = fields.Char(
         string="Book Display Title",
         translate=True,
