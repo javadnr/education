@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  odoo-db:
+
+    image: postgres:17
+
+    container_name: odoo-db
+
+    restart: always
+
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
+    volumes:
+      - odoo_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U odoo"]
+
+      interval: 10s
+
+      timeout: 5s
+
+      retries: 5
+  odoo:
+
+    image: odoo:18
+    container_name: odoo
+    restart: always
+    depends_on:
+      odoo-db:
+        condition: service_healthy
+    ports:
+      - "8069:8069"
+    environment:
+      HOST: ${ODOO_HOST}
+      USER: ${ODOO_DB_USERNAME}
+      PASSWORD: ${ODOO_DB_PASSWORD}
+    volumes:
+      - odoo_data:/var/lib/odoo
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://localhost:8069"
+        ]
+
+      interval: 15s
+
+      timeout: 5s
+
+      retries: 10
+
+
+
+volumes:
+
+  odoo_postgres_data:
+
+  odoo_data:
+
