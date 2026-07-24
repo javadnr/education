@@ -2,17 +2,13 @@ version: "3.9"
 
 services:
   odoo-db:
-
     image: postgres:17
-
     container_name: odoo-db
-
     restart: always
-
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${ODOO_DB_USERNAME}
+      POSTGRES_PASSWORD: ${ODOO_DB_PASSWORD}
 
     volumes:
       - odoo_postgres_data:/var/lib/postgresql/data
@@ -51,16 +47,46 @@ services:
         ]
 
       interval: 15s
-
       timeout: 5s
-
       retries: 10
+      start_period: 90s
 
+  app-db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${DATABASE_USER:-app}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-app}
+      POSTGRES_DB: ${DATABASE_NAME:-app}
+    volumes:
+      - app_db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-app}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  backend:
+    build: ./backend
+    depends_on:
+      odoo:
+        condition: service_healthy
+      app-db:
+        condition: service_healthy
+    environment:
+      ODOO_URL: http://odoo:8069
+      ODOO_DB: ${ODOO_DB:-sync_test}
+      ODOO_USERNAME: ${ODOO_USERNAME:-admin}
+      ODOO_PASSWORD: ${ODOO_PASSWORD:-admin}
+      DATABASE_URL: postgresql+psycopg2://${DATABASE_USER:-app}:${DATABASE_PASSWORD:-app}@app-db:5432/${DATABASE_NAME:-app}
+      # RUN_MODE: ${RUN_MODE:-loop}
+      # SYNC_INTERVAL_SECONDS: ${SYNC_INTERVAL_SECONDS:-300}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    restart: unless-stopped
 
 
 volumes:
-
+  app_db_data:
   odoo_postgres_data:
-
   odoo_data:
 
