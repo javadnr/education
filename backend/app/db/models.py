@@ -102,7 +102,7 @@ class SaleOrder(BaseModel):
         cascade="all, delete-orphan"
     )
     
-class SaleOrderLineModel(BaseModel):
+class SaleOrderLine(BaseModel):
 
     __tablename__ = "sale_order_lines"
 
@@ -136,7 +136,7 @@ class SaleOrderLineModel(BaseModel):
         back_populates="order_lines"
     )
     
-class SyncRunModel(BaseModel):
+class SyncRun(BaseModel):
 
     __tablename__ = "sync_runs"
 
@@ -164,15 +164,17 @@ class SyncRunModel(BaseModel):
         default=0
     )
     
-class SyncLogModel(BaseModel):
+class SyncLog(BaseModel):
 
     __tablename__ = "sync_logs"
 
-    id: Mapped[int] = mapped_column(
-        primary_key=True
-    )
+
     sync_run_id: Mapped[int] = mapped_column(
         ForeignKey("sync_runs.id")
+    )
+    level: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False
     )
     entity_type: Mapped[str] = mapped_column(
         String(50)
