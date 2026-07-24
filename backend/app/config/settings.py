@@ -2,6 +2,7 @@ from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+import os
 
 class Settings(BaseSettings):
 
@@ -36,7 +37,14 @@ class Settings(BaseSettings):
     ODOO_USERNAME: str
 
     ODOO_PASSWORD: str
-
+    
+    log_level = os.environ.get("LOG_LEVEL", "INFO"),
+    
+    run_mode: str
+    
+    sync_interval_seconds: int
+    
+    log_level: str
 
 @lru_cache
 def get_settings() -> Settings:
