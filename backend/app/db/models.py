@@ -62,7 +62,7 @@ class Product(BaseModel):
         String(50)
     )
     order_lines = relationship(
-        "SaleOrderLineModel",
+        "SaleOrderLine",
         back_populates="product"
     )
 

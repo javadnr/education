@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from app.odoo_client.client import OdooClient  # noqa: E402
+from app.odoo_client.client import OdooClient
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger("seed")
@@ -34,7 +34,7 @@ SALE_ORDERS = [
 def get_client() -> OdooClient:
     client = OdooClient(
         url=os.environ.get("ODOO_URL", "http://localhost:8069"),
-        db=os.environ.get("ODOO_DB", "sync_test"),
+        db=os.environ.get("ODOO_DB", "odoo"),
         username=os.environ.get("ODOO_USERNAME", "admin"),
         password=os.environ.get("ODOO_PASSWORD", "admin"),
     )

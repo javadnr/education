@@ -14,7 +14,6 @@ PRODUCT_FIELDS = [
     "default_code",
     "list_price",
     "type",
-    "detailed_type",
 ]
 PRODUCT_DOMAIN: list = []
 
