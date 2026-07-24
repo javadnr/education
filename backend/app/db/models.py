@@ -81,7 +81,8 @@ class SaleOrder(BaseModel):
         nullable=False
     )
     customer_id: Mapped[int] = mapped_column(
-        ForeignKey("contacts.id")
+        ForeignKey("contacts.id"),
+        nullable=True
     )
     order_date: Mapped[datetime] = mapped_column(
         DateTime
@@ -163,7 +164,6 @@ class SyncRun(BaseModel):
         Integer,
         default=0
     )
-    
 class SyncLog(BaseModel):
 
     __tablename__ = "sync_logs"

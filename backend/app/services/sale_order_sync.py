@@ -132,6 +132,7 @@ class SaleOrderSyncService:
                             entity_type="sale_order_line",
                             entity_odoo_id=odoo_id,
                         )
+                        
 
                 data = map_sale_order_line(raw, sale_order.id, product_internal_id)
                 _, created = self.sale_order_line_repository.upsert(odoo_id, data)

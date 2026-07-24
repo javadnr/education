@@ -9,11 +9,11 @@ from app.services.sync_orchestrator import run_full_sync
 
 logger = logging.getLogger("main")
 
-settings = get_settings()
 _shutdown_requested = False
+settings = get_settings()
 
 
-def _handle_shutdown_signal(signum, frame):
+def _handle_shutdown_signal(signum, frame):  
     global _shutdown_requested
     logger.info("signal %s received; shutting down...", signum)
     _shutdown_requested = True
@@ -49,6 +49,7 @@ def main() -> None:
     # run_mode == "loop"
     while not _shutdown_requested:
         _run_once()
+
         waited = 0
         while waited < settings.sync_interval_seconds and not _shutdown_requested:
             time.sleep(1)

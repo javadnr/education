@@ -87,6 +87,34 @@ services:
       SYNC_INTERVAL_SECONDS: ${SYNC_INTERVAL_SECONDS:-300}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
     # restart: unless-stopped
+  test-db:
+    image: postgres:17
+    profiles: ["test"]
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app_test
+    ports:
+      - "5434:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  tests:
+    profiles: ["test"]
+    build: ./
+    depends_on:
+      test-db:
+        condition: service_healthy
+    environment:
+      TEST_DATABASE_URL: postgresql+psycopg2://app:app@test-db:5432/app_test
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - "pip install --no-cache-dir -q -r requirements.txt && pytest --cov=app --cov-report=term-missing -v"
 
 
 volumes:

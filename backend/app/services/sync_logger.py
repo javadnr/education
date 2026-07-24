@@ -22,6 +22,7 @@ class SyncRunLogger:
             self.sync_run.id,
             operation_type,
         )
+        self.sync_run_id = self.sync_run.id
 
 
     def log_info(self, message: str, entity_type: Optional[str] = None,
@@ -44,7 +45,7 @@ class SyncRunLogger:
     def _log(self, level: str, message: str, entity_type: Optional[str],
               entity_odoo_id: Optional[int]) -> None:
         log_row = SyncLog(
-            sync_run_id=self.sync_run.id,
+            sync_run_id=self.sync_run_id,
             level=level,
             entity_type=entity_type,
             entity_odoo_id=entity_odoo_id,
